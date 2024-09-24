@@ -16,8 +16,9 @@ export const pool = mysql.createPool({
   connectionLimit: 10,
   queueLimit: 0,
 });
-//const getConnection = async () => await pool.getConnection();
-
-
-// Exportar el pool para usarlo en otros archivos
-
+// Función para iniciar una transacción
+export const getConnectionTransaction = async () => {
+  const connection = await pool.getConnection();
+  await connection.beginTransaction();
+  return connection;
+};
