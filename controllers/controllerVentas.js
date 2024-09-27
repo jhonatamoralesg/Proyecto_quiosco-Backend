@@ -1,4 +1,4 @@
-import { mVentas } from "../models/modelVentas";
+import { mVentas } from "../models/modelVentasSequelize";
 import { getConnectionTransaction } from "../config/database";
 
 export const controllerVenta = {
