@@ -2,9 +2,11 @@ import { pool } from "../config/database.js"; // Asegúrate de que la ruta es co
 
 export const mProductos = {
   getAll: async () => {
+    const productos=  await pool.connect();
     try {
-      const [results] = await pool.query("SELECT * FROM productos");
-      return results;
+
+      const results = await productos.query("SELECT * FROM productos");
+      return results.rows;
     } catch (error) {
       console.log("Error al cargar los productos", error);
       throw new Error("Error al cargar los productos");

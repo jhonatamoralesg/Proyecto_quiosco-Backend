@@ -1,24 +1,29 @@
-// database.js
-import mysql from 'mysql2/promise';
-import dotenv from 'dotenv';
+import pkg from 'pg'; // Importa el paquete completo como pkg
+const { Pool } = pkg; // Desestructura el objeto para obtener Pool
 
-// Configurar las variables de entorno (si usas un archivo .env)
-dotenv.config();
-
-// Crear el pool de conexiones
-export const pool = mysql.createPool({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "quioscoescolar",
-  port: "3307",
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
+export const pool = new Pool({
+  host: 'localhost',
+  user: 'postgres',
+  password: 'coper123',
+  database: 'quioscoescolar',
+  port: 5432,
 });
-// Función para iniciar una transacción
-export const getConnectionTransaction = async () => {
-  const connection = await pool.getConnection();
-  await connection.beginTransaction();
-  return connection;
-};
+// Función para probar la conexión
+async function testConnection() {
+  try {
+    // Conectar al pool
+    const client = await pool.connect();
+
+    // Hacer una consulta simple (puede ser cualquier tabla existente)
+    const res = await client.query('SELECT NOW()'); // Consulta de ejemplo
+    console.log('Conexión exitosa:', res.rows[0]);
+
+    // Liberar el cliente
+    client.release();
+  } catch (err) {
+    console.error('Error en la conexión', err);
+  }
+}
+
+// Llamar a la función para probar la conexión
+testConnection();
