@@ -4,6 +4,7 @@ import { routesProductos } from "./routes/rProductos.js";
 import path from "path";
 import cors from "cors";
 import dotenv from 'dotenv'; // Importar dotenv
+import { routesClientes } from "./routes/rClientes.js";
 
 
 dotenv.config(); // Aquí invocas dotenv para cargar las variables desde .env
@@ -32,6 +33,7 @@ app.set("views", path.join(__dirname, "views"));
 
 // Definir rutas (después de configurar CORS)
 app.use(routesProductos);
+app.use(routesClientes);
 
 // Iniciar el servidor
 app.listen(port, () => {
